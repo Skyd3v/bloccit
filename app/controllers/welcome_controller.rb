@@ -4,4 +4,8 @@ class WelcomeController < ApplicationController
 
   def about
   end
+
+  #Add contact action here
+  def contact
+  end
 end
