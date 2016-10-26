@@ -1,17 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe Post, type: :model do
+ RSpec.describe Post, type: :model do
+  
+   let(:name) { RandomData.random_sentence }
+   let(:description) { RandomData.random_paragraph }
+   let(:title) { RandomData.random_sentence }
+   let(:body) { RandomData.random_paragraph }
+ # #3
+   let(:topic) { Topic.create!(name: name, description: description) }
+ # #4
+   let(:post) { topic.posts.create!(title: title, body: body) }
 
-  let(:post) {Post.create!(title: "New Post Title", body: "New Post Body")}
+   it { is_expected.to belong_to(:topic) }
 
-  describe "attributes" do
-    it "should respond to title" do
-      expect(post).to respond_to(:title)
-    end
+   describe "attributes" do
+     it "has a title and body attribute" do
 
-    it "should respond to body" do
-      expect(post).to respond_to(:body)
-    end
-  end
-
-end
+       expect(post).to have_attributes(title: title, body: body)
+     end
+   end
+ end
