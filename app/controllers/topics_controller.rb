@@ -63,8 +63,17 @@ class TopicsController < ApplicationController
 
     def authorize_user
         unless current_user.admin?
-            flash[:alert] = 'You must be an admin to do that.'
-            redirect_to topics_path
+            if action_name == 'edit' || action_name == 'update'
+                auth_failure('moderator or an admin') unless current_user.moderator?
+            else
+                auth_failure('admin')
         end
+        end
+   end
+
+    def auth_failure(role)
+        flash[:alert] = "TopicsController: You must be #{role == 'admin' ? 'an' : 'a'} #{role} to " \
+                        "#{action_name == 'new' ? 'create' : action_name} a topic. [current_user.name(role) = '#{current_user.name}(#{current_user.role})']"
+        redirect_to topics_path
    end
 end

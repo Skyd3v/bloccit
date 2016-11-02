@@ -51,6 +51,13 @@ require 'random_data'
    role:     'admin'
  )
 
+ moderator = User.create!(
+   name:     'Moderator User',
+   email:    'mod@example.com',
+   password: 'helloworld',
+   role:     'moderator'
+ )
+
  # Create a member
  member = User.create!(
    name:     'Member User',
@@ -63,3 +70,4 @@ require 'random_data'
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{User.count} users created"
+ puts "'Moderator user' (credentials): '#{moderator.name}' (#{moderator.email}/#{moderator.password})"
