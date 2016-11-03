@@ -1,6 +1,5 @@
 class TopicsController < ApplicationController
     before_action :require_sign_in, except: [:index, :show]
-    # #8
     before_action :authorize_user, except: [:index, :show]
 
     def index
@@ -19,7 +18,8 @@ class TopicsController < ApplicationController
         @topic = Topic.new(topic_params)
 
         if @topic.save
-            redirect_to @topic, notice: 'Topic was saved successfully.'
+            flash[:notice] = 'Topic was saved successfully.'
+            redirect_to @topic
         else
             flash.now[:alert] = 'Error creating topic. Please try again.'
             render :new
@@ -32,10 +32,11 @@ class TopicsController < ApplicationController
 
     def update
         @topic = Topic.find(params[:id])
+
         @topic.assign_attributes(topic_params)
 
         if @topic.save
-            flash[:notice] = 'Topic was updated.'
+            flash[:notice] = 'Topic was updated successfully.'
             redirect_to @topic
         else
             flash.now[:alert] = 'Error saving topic. Please try again.'
@@ -67,13 +68,14 @@ class TopicsController < ApplicationController
                 auth_failure('moderator or an admin') unless current_user.moderator?
             else
                 auth_failure('admin')
+            end
+
         end
-        end
-   end
+    end
 
     def auth_failure(role)
         flash[:alert] = "TopicsController: You must be #{role == 'admin' ? 'an' : 'a'} #{role} to " \
                         "#{action_name == 'new' ? 'create' : action_name} a topic. [current_user.name(role) = '#{current_user.name}(#{current_user.role})']"
         redirect_to topics_path
-   end
+    end
 end

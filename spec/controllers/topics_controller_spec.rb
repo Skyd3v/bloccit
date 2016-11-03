@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 include RandomData
 include SessionsHelper
@@ -255,7 +254,6 @@ RSpec.describe TopicsController, type: :controller do
             end
         end
     end
-
     context 'admin user' do
         before do
             user = User.create!(name: 'Bloccit User', email: 'user@bloccit.com', password: 'helloworld', role: :admin)
