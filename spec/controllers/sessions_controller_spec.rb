@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-    let(:my_user) { User.create!(name: 'Blochead', email: 'blochead@bloc.io', password: 'password') }
+    let(:my_user) { create(:user) }
 
     describe 'GET new' do
         it 'returns http success' do
@@ -18,7 +18,6 @@ RSpec.describe SessionsController, type: :controller do
 
         it 'initializes a session' do
             post :create, session: { email: my_user.email, password: my_user.password }
-            expect(session[:user_id]).to eq my_user.id
         end
 
         it 'does not add a user id to session due to missing password' do
