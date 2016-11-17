@@ -21,9 +21,29 @@
     </div>
 </div>
 
-// #14
-<h2>Posts</h2>
-<%= render @user.posts %>
-
-<h2>Comments</h2>
-<%= render @user.comments %>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Posts</h2>
+        <% if user_has_made_posts?(@user) %>
+        <%= render @user.posts %>
+    <% else %>
+        <p><%= @user.name %>
+            has not submitted any posts yet.</p>
+        <% end %>
+    </div>
+    <div class="col-md-6">
+        <h2>Comments</h2>
+        <% if user_has_made_comments?(@user) %>
+        <%= render @user.comments %>
+    <% else %>
+        <p><%= @user.name %>
+            has not submitted any comments yet.</p>
+        <% end %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h2>Favorite Posts</h2>
+        <%= render partial: 'users/favorite', collection: @user.favorite_posts %>
+    </div>
+</div>

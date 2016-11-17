@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-md-6">
+        <%= render favorite %>
+    </div>
+    <div class="col-md-3">
+        <%= image_tag favorite.user.avatar_url(48) %>
+    </div>
+    <div class="col-md-3">
+        <p><%= pluralize(favorite.votes.count, 'vote') %></p>
+        <p><%= pluralize(favorite.comments.count, 'comment') %></p>
+    </div>
+</div>
+<hr>
